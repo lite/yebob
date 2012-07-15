@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>test</title>
+<script type="text/javascript" src="js/jquery-1.4.4.min.js" ></script>
+
+<style type="text/css" >
+#attach {position: absolute; background-color:#eee;margin: -70px 0 0 6px; height:60px; width:380px;}
+#attach img{width: 60px; height:60px;}
+#test {width: 400px; height:200px;}
+</style>
+</head>
+<body>
+
+<textarea id="test">
+这是[img]http://photocdn.sohu.com/20060104/Img241277200.jpg[/img]图片；
+下一张是[img]http://photocdn.sohu.com/20060104/Img241277218.jpg[/img]，谢谢！ 
+</textarea>
+<div id="attach"><!-- / --></div> 
+<script>
+//<!--
+var testEm = document.getElementById("test");
+for(i=1;i <testEm.value.split("[img]").length;i++){ 
+        var tmpstr=testEm.value.split("[img]")[i].split("[/img]")[0];
+        var oImg=document.createElement("img"); 
+        oImg.src=tmpstr;
+        document.getElementById("attach").appendChild(oImg);
+        $('#attach').css("display","");
+        $('#test').css("padding-bottom","40px");
+} 
+//-->
+</script> 
+</body>
+</html>

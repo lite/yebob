@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   repos="http://lite@dev.yebob.com/svn"
+   name=""
+   revision="2048"
+   last-author="zzc"
+   url="http://lite@dev.yebob.com/svn/sns/com.yebob.sns.web/WebContent"
+   uuid="5f0a98ed-5c1a-4f3f-a5c5-856cdf838d07"
+   committed-rev="2044"
+   kind="dir"
+   committed-date="2012-06-26T14:38:29.199359Z"/>
+<entry
+   name="META-INF"
+   kind="dir"/>
+<entry
+   name="WEB-INF"
+   kind="dir"/>
+<entry
+   name="css"
+   kind="dir"/>
+<entry
+   name="dump.jsp"
+   checksum="21b564243bce21f93a6ced6c03ec0eb3"
+   last-author="zzc"
+   committed-rev="1110"
+   text-time="2011-10-13T22:39:02.000000Z"
+   kind="file"
+   committed-date="2011-10-13T22:39:02.683301Z"/>
+<entry
+   name="image"
+   kind="dir"/>
+<entry
+   name="js"
+   kind="dir"/>
+<entry
+   name="test.html"
+   checksum="d78d94fa3e65b4e538c9c1116d1bd53a"
+   last-author="zzc"
+   committed-rev="1110"
+   text-time="2011-10-13T22:39:02.000000Z"
+   kind="file"
+   committed-date="2011-10-13T22:39:02.683301Z"/>
+<entry
+   name="valums"
+   kind="dir"/>
+</wc-entries>

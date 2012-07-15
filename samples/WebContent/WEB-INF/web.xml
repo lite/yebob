@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+"http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+	<display-name>My Web Application</display-name>   <!--  显示内容标题名  -->
+	<description>A application for test</description>   <!--  描述名  -->
+	<servlet>
+		<servlet-name>Test</servlet-name>   <!--  容器为程序取的别名  -->
+		<display-name>Test</display-name>   <!--  显示内容标题名  -->
+		<description>A test Servlet</description>   <!--  描述名  -->
+		<servlet-class>com.fssle.sample.Test</servlet-class>   <!--  描物理文件夹classes里的类名  -->
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Test</servlet-name>   <!--  容器为程序取的别名  -->
+		<url-pattern>/Test</url-pattern>   <!--  URL地址访问时输入的名称  -->
+	</servlet-mapping>
+</web-app>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+>
+    <jsp:directive.page language="java"
+        contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="
+java.io.IOException,
+java.io.PrintWriter,
+java.util.HashMap,
+java.util.List,
+java.util.Map,
+javax.servlet.Servlet,
+javax.servlet.ServletConfig,
+javax.servlet.ServletContext,
+javax.servlet.ServletException,
+javax.servlet.http.HttpServlet,
+javax.servlet.http.HttpServletRequest,
+javax.servlet.http.HttpServletResponse,
+org.apache.hadoop.hbase.util.Bytes,
+org.json.JSONArray,
+org.json.JSONObject,
+com.yebob.accounts.user.UserCtrlPortType,
+com.yebob.accounts.user.UserDetails,
+com.yebob.accounts.user.UserExtraDetails,
+com.yebob.sns.request.BroadcastController,
+com.yebob.sns.util.BroadcastDetails,
+com.yebob.sns.web.bean.BroadcastHtml,
+com.yebob.sns.web.bean.UserExtraHtml,
+com.yebob.sns.web.bean.UserHtml,
+com.yebob.sns.web.function.Functions"/>
+    <jsp:text>
+        <![CDATA[ <?xml version="1.0" encoding="UTF-8" ?> ]]>
+    </jsp:text>
+    <jsp:text>
+        <![CDATA[ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> ]]>
+    </jsp:text>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+
+
+<jsp:scriptlet>
+<![CDATA[
+
+int SHOW_BROADCAST_COUNT = 20;
+ServletContext ctx;
+BroadcastController broadcastController;
+UserCtrlPortType ucpt;
+
+ctx = config.getServletContext();
+broadcastController = (BroadcastController) ctx.getAttribute("broadcastController");
+ucpt = (UserCtrlPortType) ctx.getAttribute("ucpt");
+
+Map<String, UserHtml> userHtmlCache = new HashMap<String, UserHtml>();
+Map<String, UserExtraHtml> userExtraHtmlCache = new HashMap<String, UserExtraHtml>();
+
+
+JSONObject jo = new JSONObject();
+
+
+String start = request.getParameter("start");
+
+try {
+	
+	// 接收到的广播
+	List<BroadcastDetails> detailsList = null;
+	if(start == null || start.isEmpty())
+		detailsList = broadcastController.list(SHOW_BROADCAST_COUNT);
+	else {
+		byte[] startRow = Bytes.toBytes(start);
+		detailsList = broadcastController.list(startRow, false, SHOW_BROADCAST_COUNT);
+	}
+	
+	if(detailsList != null && !detailsList.isEmpty()){
+
+		JSONArray broadcastJa = new JSONArray();
+		
+		for(BroadcastDetails details : detailsList) {
+			BroadcastHtml html = BroadcastHtml.fromDetails(details);
+			html.setDateTime(Functions.shortDate4YebobRId(details.getId()));
+			JSONObject broadcastJo = new JSONObject(html);
+			String creatorId = details.getCreatorId();
+			// 设置用户信息
+			UserHtml userHtml = userHtmlCache.get(creatorId);
+			if(userHtml == null) {
+				UserDetails userDetails = ucpt.getUserDetailsByUserId(creatorId);
+				if(userDetails == null)
+					continue;
+				userHtml = UserHtml.fromDetails(userDetails);
+				userHtmlCache.put(creatorId, userHtml);
+			} 
+			broadcastJo.put("creator", new JSONObject(userHtml));
+			
+			UserExtraHtml userExtraHtml = userExtraHtmlCache.get(creatorId);
+			if(userExtraHtml == null) {
+				UserExtraDetails userExtraDetails = ucpt.getUserExtraDetailsByUserId(creatorId);
+				if(userExtraDetails != null) {
+					userExtraHtml = UserExtraHtml.fromDetails(userExtraDetails);
+					userExtraHtmlCache.put(creatorId, userExtraHtml);
+				}
+			}
+			broadcastJo.put("creatorExtra", new JSONObject(userExtraHtml));
+			broadcastJa.put(broadcastJo);
+		}
+		
+		if(broadcastJa.length() > 0) {
+			jo.put("h_broadcasts", broadcastJa);
+			if(broadcastJa.length() >= SHOW_BROADCAST_COUNT) {
+				BroadcastDetails lastDetails = detailsList.get(detailsList.size()-1);
+				jo.put("nextStart", lastDetails.getId());
+			}
+		}
+		jo.put("success", true);
+	}
+	
+} catch (Exception e) {
+	ctx.log(null, e);
+	try {
+		jo.put("success", false);			
+		jo.put("exception", e.getMessage());
+	} catch (Exception e1) {ctx.log(null, e1);}
+}
+
+out.print(jo.toString());
+out.close();
+
+]]>
+
+</jsp:scriptlet>
+
+</body>
+</html>
+</jsp:root>
