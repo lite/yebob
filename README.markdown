@@ -2,7 +2,7 @@
 
 get the latest source code
 
-	svn co http://dev.yebob.com/svn/ svn
+	"svn co" or "svn up"
 
 configuration
 
