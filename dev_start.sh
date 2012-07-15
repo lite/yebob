@@ -19,4 +19,4 @@ cd $YEBOB_HOME/tomcat6
 ./bin/startup.sh
 
 # start apache2
-sudo apachectl restart
+# apachectl restart

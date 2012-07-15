@@ -1,0 +1,6 @@
+<VirtualHost *:80> 
+    ServerName debian 
+
+    ProxyPass / ajp://localhost:8009/
+</VirtualHost>
+
