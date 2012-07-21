@@ -3,7 +3,7 @@ YEBOB_HOME=`pwd`
 echo $YEBOB_HOME
 
 # set /etc/hosts
-# 127.0.0.1 debian localhost test.yebob.com
+# 127.0.0.1 jupiter localhost test.yebob.com
 
 # apache config
 # cp $YEBOB_HONE/conf/a2/default /etc/apache2/sites-available
@@ -15,6 +15,8 @@ cp $YEBOB_HOME/conf/regionservers $YEBOB_HOME/hbase-0.20.6/conf/
 
 # pi config
 cp $YEBOB_HOME/conf/pi/build.xml $YEBOB_HOME/svn/pi/com.yebob.game.web/
+cp $YEBOB_HOME/conf/hbase-site.xml $YEBOB_HOME/svn/pi/com.yebob.sns.web/conf/
+cp $YEBOB_HOME/conf/regionservers $YEBOB_HOME/svn/pi/com.yebob.sns.web/conf/
 
 # sns config
 cp $YEBOB_HOME/conf/hbase-site.xml $YEBOB_HOME/svn/sns/com.yebob.sns.web/conf/

@@ -32,7 +32,7 @@
   </property>
   <property>
   	<name>hbase.zookeeper.quorum</name>
-  	<value>debian</value>
+  	<value>jupiter</value>
   </property>
 <property>
 <name>hbase.regionserver.class</name>

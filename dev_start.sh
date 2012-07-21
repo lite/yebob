@@ -7,8 +7,8 @@ cd $YEBOB_HOME/svn/sns/com.yebob.sns.web/
 ant deploy
 
 # start axis2
-cd $YEBOB_HOME/axis2-1.5.1
-./bin/axis2server.sh &
+#cd $YEBOB_HOME/axis2-1.5.1
+#./bin/axis2server.sh &
 
 # start hbase
 cd $YEBOB_HOME/hbase-0.20.6
